@@ -1,6 +1,8 @@
 import java.sql.Timestamp;
 import java.util.Date;
 import java.text.DateFormat;
+import org.sql2o.*;
+
 
 public abstract class Media {
   public String title;
@@ -28,5 +30,14 @@ public abstract class Media {
   }
   public String getType() {
     return type;
+  }
+
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM media WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
   }
 }

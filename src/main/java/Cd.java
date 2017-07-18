@@ -62,4 +62,38 @@ public class Cd extends Media {
     }
   }
 
+  public static Cd find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM media WHERE id=:id";
+      Cd cd = con.createQuery(sql)
+        .addParameter("id", id)
+        .throwOnMappingFailure(false)
+        .executeAndFetchFirst(Cd.class);
+      return cd;
+    }
+  }
+
+  public void update(String title, String description, String artist, int publishYear) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE media SET title=:title, description=:description, artist=:artist, publishYear=:publishYear WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("title", title)
+        .addParameter("description", description)
+        .addParameter("artist", artist)
+        .addParameter("publishYear", publishYear)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+  public void delete() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "DELETE FROM media WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+
 }

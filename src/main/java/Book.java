@@ -62,4 +62,28 @@ public class Book extends Media {
     }
   }
 
+  public static Book find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM media WHERE id=:id";
+      Book book = con.createQuery(sql)
+        .addParameter("id", id)
+        .throwOnMappingFailure(false)
+        .executeAndFetchFirst(Book.class);
+      return book;
+    }
+  }
+
+  public void update(String title, String description, String author, int publishYear) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE media SET title=:title, description=:description, author=:author, publishYear=:publishYear WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("title", title)
+        .addParameter("description", description)
+        .addParameter("author", author)
+        .addParameter("publishYear", publishYear)
+        .addParameter("id", id)  
+        .executeUpdate();
+    }
+  }
+
 }

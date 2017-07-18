@@ -50,5 +50,43 @@ public class CdTest {
     assertEquals(testCd.getId(), savedCd.getId());
   }
 
+  @Test
+  public void all_returnsAllInstancesOfCDs_true() {
+    Cd firstCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    firstCd.save();
+    Cd secondCd = new Cd("They Write the Songs", "Lorem ipsum etc", "Barry White", 1981);
+    secondCd.save();
+    assertEquals(true, Cd.all().get(0).equals(firstCd));
+    assertEquals(true, Cd.all().get(1).equals(secondCd));
+  }
+
+  @Test
+  public void find_returnsCDWithSameId_secondCD() {
+    Cd firstCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    firstCd.save();
+    Cd secondCd = new Cd("They Write the Songs", "Lorem ipsum etc", "Barry White", 1981);
+    secondCd.save();
+    assertEquals(Cd.find(secondCd.getId()), secondCd);
+  }
+
+  @Test
+  public void update_saveOverOldAttributesOfCd() {
+    Cd firstCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    firstCd.save();
+    firstCd.update("We Write the Songs", "Lorem ipsum etc", "Barry White", 1981);
+    assertEquals("Barry White", Cd.all().get(0).getArtist());
+  }
+
+  @Test
+  public void delete_deletesACdFromDB_null() {
+    Cd firstCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    firstCd.save();
+    int testId = firstCd.getId();
+    firstCd.delete();
+    assertEquals(null, Cd.find(testId));
+  }
+
+
+
 
 }

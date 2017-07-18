@@ -50,5 +50,41 @@ public class BookTest {
     assertEquals(testBook.getId(), savedBook.getId());
   }
 
+  @Test
+  public void all_returnsAllInstancesOfBooks_true() {
+    Book firstBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    firstBook.save();
+    Book secondBook = new Book("Bible", "lorem ipsum", "God", 1565);
+    secondBook.save();
+    assertEquals(true, Book.all().get(0).equals(firstBook));
+    assertEquals(true, Book.all().get(1).equals(secondBook));
+  }
+
+  @Test
+  public void find_returnsBookWithSameId_secondBook() {
+    Book firstBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    firstBook.save();
+    Book secondBook = new Book("Bible", "lorem ipsum", "God", 1565);
+    secondBook.save();
+    assertEquals(Book.find(secondBook.getId()), secondBook);
+  }
+
+  @Test
+  public void update_saveOverOldAttributesOfBook_1590() {
+    Book firstBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    firstBook.save();
+    firstBook.update("Macbeth", "lorem ipsum", "Shakespeare", 1590);
+    assertEquals(1590, Book.all().get(0).getPublishYear());
+  }
+
+  @Test
+  public void delete_deletesABookFromDB_null() {
+    Book firstBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    firstBook.save();
+    int testId = firstBook.getId();
+    firstBook.delete();
+    assertEquals(null, Book.find(testId));
+  }
+
 
 }
