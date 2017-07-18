@@ -9,6 +9,7 @@ public abstract class Media {
   public int id;
   public int publishYear;
   public Timestamp lastCheckedOut;
+  public String type;
 
   public String getTitle() {
     return title;
@@ -24,5 +25,8 @@ public abstract class Media {
   }
   public int getPublishYear() {
     return publishYear;
+  }
+  public String getType() {
+    return type;
   }
 }

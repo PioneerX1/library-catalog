@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class BookTest {
-  // @Rule
-  // public DatabaseRule database = new DatabaseRule();
+  @Rule
+  public DatabaseRule database = new DatabaseRule();
 
   @Test
   public void Book_instantiatesCorrectly_true() {
@@ -34,6 +34,20 @@ public class BookTest {
     Book testBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
     Book testBook2 = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
     assertTrue(testBook.equals(testBook2));
+  }
+  @Test
+  public void save_successfullyAddsBookToDatabase_List() {
+    Book testBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    testBook.save();
+    assertTrue(Book.all().get(0).equals(testBook));
+  }
+  @Test
+  public void save_assignsIdToBook_1() {
+    Book testBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    testBook.save();
+    Book savedBook = Book.all().get(0);
+    assertTrue(Book.all().get(0).getId() > 0);
+    assertEquals(testBook.getId(), savedBook.getId());
   }
 
 
