@@ -40,4 +40,23 @@ public abstract class Media {
         .executeUpdate();
     }
   }
+
+  public boolean isCheckedOut() {
+    if (patronId > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public void checkOut(int patronId) {
+
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE media SET patronId = :patronId WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .addParameter("patronId", patronId)
+        .executeUpdate();
+    }
+  }
 }

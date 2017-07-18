@@ -86,5 +86,23 @@ public class BookTest {
     assertEquals(null, Book.find(testId));
   }
 
+  @Test
+  public void checkOut_checksOutBook() {
+    Book testBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    testBook.save();
+    int patronId = 9;
+    testBook.checkOut(patronId);
+    assertTrue(Book.find(testBook.getId()).getPatronId() > 0);
+  }
+
+  @Test
+  public void isCheckedOut_checksIfCheckedOut_true() {
+    Book testBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    testBook.save();
+    int patronId = 9;
+    testBook.checkOut(patronId);
+    Book savedBook = Book.find(testBook.getId());
+    assertEquals(savedBook.isCheckedOut(),true);
+  }
 
 }
