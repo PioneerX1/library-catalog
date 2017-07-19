@@ -66,4 +66,20 @@ public class Patron {
               .executeUpdate();
     }
   }
+
+  public boolean delete() {
+    if (Book.getAllCheckedOut(id).isEmpty()  && Cd.getAllCheckedOut(id).isEmpty() ) {
+      try(Connection con = DB.sql2o.open()) {
+        String sql = "DELETE FROM patrons WHERE id = :id";
+        con.createQuery(sql)
+                .addParameter("id", id)
+                .executeUpdate();
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
 }

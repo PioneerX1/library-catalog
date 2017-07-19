@@ -55,4 +55,25 @@ public class PatronTest {
     assertEquals("Tommen", savedPatron.getName());
 
   }
+
+  @Test
+  public void delete_deletesPatronFromDB_null() {
+    Patron testPatron = new Patron("Joe Schmo");
+    testPatron.save();
+    testPatron.delete();
+    assertEquals(null, Patron.find(testPatron.getId()));
+  }
+
+  @Test
+  public void delete_willNOTdeleteFromDBIfMediaCheckedOut_false() {
+    Patron testPatron = new Patron("Joe Schmo");
+    testPatron.save();
+    Book testBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    testBook.save();
+    testBook.checkOut(testPatron.getId());
+    Cd testCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    testCd.save();
+    testCd.checkOut(testPatron.getId());
+    assertEquals(false, testPatron.delete());
+  }
 }
