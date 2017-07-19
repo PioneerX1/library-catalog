@@ -1,0 +1,101 @@
+<!--index.vtl-->
+<h1>Library Catalog</h1>
+<div class="row">
+  <div class="col-sm-4">
+    <h2>Add a new Patron:</h2>
+
+    <form action="/patrons" method="post">
+      <div class="form-group">
+        <label for="name">Patron Name</label>
+        <input id="name" name="name" type="text" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-default">Add patron</button>
+    </form>
+
+    <h3>List of Patrons</h3>
+
+    <ul>
+      #foreach ($patron in $patrons)
+        <li><a href="/patrons/$patron.getId()">$patron.getName()</a></li>
+      #end
+    </ul>
+
+  </div>
+  <div class="col-sm-4">
+
+    <h2>Add a new Book:</h2>
+
+    <form action="/books" method="post">
+
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" class="form-control" rows=5></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="author">Author</label>
+        <input id="author" name="author" type="text" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="publishYear">Year published</label>
+        <input id="publishYear" name="publishYear" type="text" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-default">Add book</button>
+    </form>
+
+    <h3>List of Books</h3>
+
+    <ul>
+      #foreach ($book in $books)
+        <li><a href="/books/$book.getId()">$book.getTitle()</a></li>
+      #end
+    </ul>
+  </div>
+  <div class="col-sm-4">
+    <h2>Add a new Cd:</h2>
+
+    <form action="/cds" method="post">
+
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input id="title" name="title" type="text" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" class="form-control" rows=5></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="artist">Artist</label>
+        <input id="artist" name="artist" type="text" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="publishYear">Year published</label>
+        <input id="publishYear" name="publishYear" type="text" class="form-control">
+      </div>
+
+      <button type="submit" class="btn btn-default">Add cd</button>
+
+      <h3>List of Cds</h3>
+
+      <ul>
+        #foreach ($cd in $cds)
+          <li><a href="/cds/$cd.getId()">$cd.getTitle()</a></li>
+        #end
+      </ul>
+    </form>
+  </div>
+</div>
+
+
+<!--index.vtl-->
