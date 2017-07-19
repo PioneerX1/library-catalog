@@ -45,4 +45,14 @@ public class PatronTest {
     testPatron.save();
     assertTrue(testPatron.equals(Patron.find(testPatron.getId())));
   }
+
+  @Test
+  public void update_updatesPatronName_Tommen() {
+    Patron testPatron = new Patron("Joe Schmo");
+    testPatron.save();
+    testPatron.update("Tommen");
+    Patron savedPatron = Patron.find(testPatron.getId());
+    assertEquals("Tommen", savedPatron.getName());
+
+  }
 }

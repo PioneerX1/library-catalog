@@ -56,4 +56,14 @@ public class Patron {
               .executeAndFetchFirst(Patron.class);
     }
   }
+
+  public void update(String name) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "UPDATE patrons SET name = :name WHERE id = :id";
+      con.createQuery(sql)
+              .addParameter("id", id)
+              .addParameter("name", name)
+              .executeUpdate();
+    }
+  }
 }
