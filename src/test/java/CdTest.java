@@ -86,7 +86,51 @@ public class CdTest {
     assertEquals(null, Cd.find(testId));
   }
 
+  @Test
+  public void checkOut_checksOutCd() {
+    Cd testCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    testCd.save();
+    int patronId = 9;
+    testCd.checkOut(patronId);
+    assertTrue(Cd.find(testCd.getId()).getPatronId() > 0);
+  }
 
+  @Test
+  public void isCheckedOut_checksIfCheckedOut_true() {
+    Cd testCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    testCd.save();
+    int patronId = 9;
+    testCd.checkOut(patronId);
+    Cd savedCd = Cd.find(testCd.getId());
+    assertEquals(savedCd.isCheckedOut(),true);
+  }
+
+  @Test
+  public void checkIn_returnsCd_true() {
+    Cd testCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    testCd.save();
+    int patronId = 9;
+    testCd.checkOut(patronId);
+    testCd.checkIn();
+    Cd savedCd = Cd.find(testCd.getId());
+    assertTrue(Cd.find(testCd.getId()).getPatronId() == -1);
+    assertEquals(savedCd.isCheckedOut(),false);
+  }
+
+  @Test
+  public void getAllCheckedOut_List() {
+    Cd firstCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    firstCd.save();
+    Cd secondCd = new Cd("They Write the Songs", "Lorem ipsum etc", "Barry White", 1981);
+    secondCd.save();
+    int patronId = 9;
+    firstCd.checkOut(patronId);
+    secondCd.checkOut(patronId);    
+    Cd savedFirstCd = Cd.find(firstCd.getId());
+    Cd savedSecondCd = Cd.find(secondCd.getId());
+    assertTrue(Cd.getAllCheckedOut().contains(savedFirstCd));
+    assertTrue(Cd.getAllCheckedOut().contains(savedSecondCd));
+  }
 
 
 }

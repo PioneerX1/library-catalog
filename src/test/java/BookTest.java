@@ -87,7 +87,7 @@ public class BookTest {
   }
 
   @Test
-  public void checkOut_checksOutBook() {
+  public void checkOut_checksOutBook_true() {
     Book testBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
     testBook.save();
     int patronId = 9;
@@ -103,6 +103,33 @@ public class BookTest {
     testBook.checkOut(patronId);
     Book savedBook = Book.find(testBook.getId());
     assertEquals(savedBook.isCheckedOut(),true);
+  }
+
+  @Test
+  public void checkIn_returnsBook_true() {
+    Book testBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    testBook.save();
+    int patronId = 9;
+    testBook.checkOut(patronId);
+    testBook.checkIn();
+    Book savedBook = Book.find(testBook.getId());
+    assertTrue(Book.find(testBook.getId()).getPatronId() == -1);
+    assertEquals(savedBook.isCheckedOut(),false);
+  }
+
+  @Test
+  public void getAllCheckedOut_List() {
+    Book firstBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    firstBook.save();
+    Book secondBook = new Book("Bible", "lorem ipsum", "God", 1565);
+    secondBook.save();
+    int patronId = 9;
+    firstBook.checkOut(patronId);
+    secondBook.checkOut(patronId);
+    Book savedFirstBook = Book.find(firstBook.getId());
+    Book savedSecondBook = Book.find(secondBook.getId());
+    assertTrue(Book.getAllCheckedOut().contains(savedFirstBook));
+    assertTrue(Book.getAllCheckedOut().contains(savedSecondBook));
   }
 
 }

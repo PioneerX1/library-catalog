@@ -95,5 +95,13 @@ public class Cd extends Media {
     }
   }
 
+  public static List<Cd> getAllCheckedOut() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM media WHERE patronId > -1 AND type = 'cd'";
+      return con.createQuery(sql)
+        .throwOnMappingFailure(false)
+        .executeAndFetch(Cd.class);
+    }
+  }
 
 }

@@ -81,9 +81,19 @@ public class Book extends Media {
         .addParameter("description", description)
         .addParameter("author", author)
         .addParameter("publishYear", publishYear)
-        .addParameter("id", id)  
+        .addParameter("id", id)
         .executeUpdate();
     }
   }
+
+  public static List<Book> getAllCheckedOut() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM media WHERE patronId > -1 AND type = 'book'";
+      return con.createQuery(sql)
+        .throwOnMappingFailure(false)
+        .executeAndFetch(Book.class);
+    }
+  }
+
 
 }

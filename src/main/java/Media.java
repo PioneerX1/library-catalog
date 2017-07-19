@@ -2,6 +2,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.text.DateFormat;
 import org.sql2o.*;
+import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+
 
 
 public abstract class Media {
@@ -50,7 +54,6 @@ public abstract class Media {
   }
 
   public void checkOut(int patronId) {
-
     try(Connection con = DB.sql2o.open()) {
       String sql = "UPDATE media SET patronId = :patronId WHERE id=:id";
       con.createQuery(sql)
@@ -59,4 +62,15 @@ public abstract class Media {
         .executeUpdate();
     }
   }
+
+  public void checkIn() {
+    try(Connection con = DB.sql2o.open()){
+      String sql = "UPDATE media SET patronId = -1 WHERE id=:id";
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+
 }
