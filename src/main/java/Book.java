@@ -86,6 +86,7 @@ public class Book extends Media {
     }
   }
 
+  //returns all books checked out by all patrons
   public static List<Book> getAllCheckedOut() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM media WHERE patronId > -1 AND type = 'book'";
@@ -94,6 +95,18 @@ public class Book extends Media {
         .executeAndFetch(Book.class);
     }
   }
+
+  //returns all books checked out by a specific patron
+  public static List<Book> getAllCheckedOut(int patronId) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM media WHERE patronId = :patronId AND type = 'book'";
+      return con.createQuery(sql)
+        .addParameter("patronId", patronId)
+        .throwOnMappingFailure(false)
+        .executeAndFetch(Book.class);
+    }
+  }
+
 
 
 }

@@ -118,7 +118,7 @@ public class BookTest {
   }
 
   @Test
-  public void getAllCheckedOut_List() {
+  public void getAllCheckedOut_masterList_List() {
     Book firstBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
     firstBook.save();
     Book secondBook = new Book("Bible", "lorem ipsum", "God", 1565);
@@ -130,6 +130,21 @@ public class BookTest {
     Book savedSecondBook = Book.find(secondBook.getId());
     assertTrue(Book.getAllCheckedOut().contains(savedFirstBook));
     assertTrue(Book.getAllCheckedOut().contains(savedSecondBook));
+  }
+
+  @Test
+  public void getAllCheckedOut_BySpecificPatron_List() {
+    Book firstBook = new Book("Macbeth", "lorem ipsum", "Shakespeare", 1600);
+    firstBook.save();
+    Book secondBook = new Book("Bible", "lorem ipsum", "God", 1565);
+    secondBook.save();
+    int patronId = 9;
+    firstBook.checkOut(patronId);
+    secondBook.checkOut(patronId);
+    Book savedFirstBook = Book.find(firstBook.getId());
+    Book savedSecondBook = Book.find(secondBook.getId());
+    assertTrue(Book.getAllCheckedOut(patronId).contains(savedFirstBook));
+    assertTrue(Book.getAllCheckedOut(patronId).contains(savedSecondBook));
   }
 
 }

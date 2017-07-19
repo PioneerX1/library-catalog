@@ -125,12 +125,28 @@ public class CdTest {
     secondCd.save();
     int patronId = 9;
     firstCd.checkOut(patronId);
-    secondCd.checkOut(patronId);    
+    secondCd.checkOut(patronId);
     Cd savedFirstCd = Cd.find(firstCd.getId());
     Cd savedSecondCd = Cd.find(secondCd.getId());
     assertTrue(Cd.getAllCheckedOut().contains(savedFirstCd));
     assertTrue(Cd.getAllCheckedOut().contains(savedSecondCd));
   }
+
+  @Test
+  public void getAllCheckedOut_BySpecificPatron_List() {
+    Cd firstCd = new Cd("We Write the Songs", "Lorem ipsum etc", "Barry Manilow", 1971);
+    firstCd.save();
+    Cd secondCd = new Cd("They Write the Songs", "Lorem ipsum etc", "Barry White", 1981);
+    secondCd.save();
+    int patronId = 9;
+    firstCd.checkOut(patronId);
+    secondCd.checkOut(patronId);
+    Cd savedFirstCd = Cd.find(firstCd.getId());
+    Cd savedSecondCd = Cd.find(secondCd.getId());
+    assertTrue(Cd.getAllCheckedOut(patronId).contains(savedFirstCd));
+    assertTrue(Cd.getAllCheckedOut(patronId).contains(savedSecondCd));
+  }
+
 
 
 }

@@ -95,6 +95,7 @@ public class Cd extends Media {
     }
   }
 
+  //returns all cds checked out by all patrons
   public static List<Cd> getAllCheckedOut() {
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM media WHERE patronId > -1 AND type = 'cd'";
@@ -103,5 +104,17 @@ public class Cd extends Media {
         .executeAndFetch(Cd.class);
     }
   }
+
+  //returns all cds checked out by a specific patron
+  public static List<Cd> getAllCheckedOut(int patronId) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM media WHERE patronId = :patronId AND type = 'cd'";
+      return con.createQuery(sql)
+        .addParameter("patronId", patronId)
+        .throwOnMappingFailure(false)
+        .executeAndFetch(Cd.class);
+    }
+  }
+
 
 }
