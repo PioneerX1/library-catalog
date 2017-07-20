@@ -57,6 +57,10 @@ public class App {
     get("/books/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Book book = Book.find(Integer.parseInt(request.params(":id")));
+      if(book.isCheckedOut()) {
+        Patron tempPatron = Patron.find(book.getPatronId());
+        model.put("tempPatron", tempPatron);
+      }
       model.put("book", book);
       model.put("patrons", Patron.all());
       model.put("template", "templates/book.vtl");

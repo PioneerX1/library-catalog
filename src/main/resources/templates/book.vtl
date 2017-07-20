@@ -8,7 +8,7 @@
 
 #if ($book.isCheckedOut())
   <div class="alert alert-danger">
-    This book is checked.
+    This book is checked out by $tempPatron.getName().
   </div>
 #else
   <div class="alert alert-success">
