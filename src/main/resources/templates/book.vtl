@@ -1,0 +1,43 @@
+<!--book.vtl-->
+<h1>Book Info For $book.getTitle()</h1>
+
+<h3>Author: $book.getAuthor()</h3>
+<h4>Description:</h4>
+<p>$book.getDescription()</p>
+<h4>Year Published: $book.getPublishYear()</h4>
+
+#if ($book.isCheckedOut())
+  <div class="alert alert-danger">
+    This book is checked.
+  </div>
+#else
+  <div class="alert alert-success">
+    Available.
+  </div>
+  <h4>Check out this book</h4>
+  <form action="/books/$book.getId()/checkout" method="post">
+    <div class="form-group">
+      <select name="patron" class="form-control">
+        #foreach ($patron in $patrons)
+          <option value="$patron.getId()">$patron.getName()</option>
+        #end
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Check Out!</button>
+  </form>
+#end
+
+<hr>
+
+<div class="btn-group">
+  <a href="/books/$book.getId()/update" class="btn btn-info">Update Book</a>
+
+  <a href="/books/$book.getId()/delete" class="btn btn-danger">Delete Book</a>
+
+  <a href="/" class="btn btn-primary">Go Home</a>
+</div>
+
+
+
+
+<!--book.vtl-->

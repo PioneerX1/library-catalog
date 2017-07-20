@@ -54,5 +54,26 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
+    get("/books/:id", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      model.put("book", book);
+      model.put("patrons", Patron.all());
+      model.put("template", "templates/book.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/books/:id/checkout", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      int patronId = Integer.parseInt(request.queryParams("patron"));
+      Book book = Book.find(Integer.parseInt(request.params(":id")));
+      book.checkOut(patronId);
+      String url = String.format("/books/%d", book.getId());
+      response.redirect(url);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+
+
   }
 }
